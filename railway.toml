@@ -1,0 +1,8 @@
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "java -Dserver.port=$PORT -Dspring.profiles.active=production -jar target/*.jar"
+healthcheckPath = "/api/actuator/health"
+healthcheckTimeout = 100
+restartPolicyType = "ON_FAILURE"
