@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
 import com.banking.entity.AccountType;
 import com.banking.entity.Role;
@@ -13,7 +12,7 @@ import com.banking.entity.User;
 import com.banking.repository.UserRepository;
 import com.banking.service.AccountService;
 
-@Component
+//@Component  // Temporarily disabled for deployment debugging
 public class DataInitializer implements CommandLineRunner {
     
     @Autowired
