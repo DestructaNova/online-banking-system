@@ -20,7 +20,8 @@ echo "🏗️ Building application..."
 npm run build
 
 echo "⚙️ Setting up environment variables..."
-echo "Please enter your Railway backend URL (e.g., https://your-app.railway.app):"
+echo "Please enter your AWS Lightsail backend URL:"
+echo "Example: https://online-banking.123456789.us-east-1.cs.amazonlightsail.com"
 read -p "Backend URL: " BACKEND_URL
 
 # Set environment variable for Vercel
