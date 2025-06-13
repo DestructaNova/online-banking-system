@@ -2,7 +2,10 @@ import api from './api'
 
 const adminService = {
   getAllUsers: async () => {
+    console.log('AdminService: Making request to /admin/users')
+    console.log('API base URL:', api.defaults.baseURL)
     const response = await api.get('/admin/users')
+    console.log('AdminService: Response received:', response)
     return response.data
   },
 
