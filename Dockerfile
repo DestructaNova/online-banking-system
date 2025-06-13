@@ -1,5 +1,10 @@
-# Multi-stage build for Spring Boot application
-FROM maven:3.8.6-openjdk-17-slim AS build
+# Use OpenJDK with Maven for build and runtime
+FROM openjdk:17-jdk-slim
+
+# Install Maven
+RUN apt-get update && \
+    apt-get install -y maven && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -11,16 +16,8 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-# Runtime stage
-FROM openjdk:17-jre-slim
-
-WORKDIR /app
-
-# Copy the built jar file
-COPY --from=build /app/target/*.jar app.jar
-
 # Expose port
 EXPOSE $PORT
 
 # Run the application
-CMD ["sh", "-c", "java -Dserver.port=$PORT -Dspring.profiles.active=h2 -jar app.jar"]
+CMD ["sh", "-c", "java -Dserver.port=$PORT -Dspring.profiles.active=h2 -jar target/online-banking-system-0.0.1-SNAPSHOT.jar"]
