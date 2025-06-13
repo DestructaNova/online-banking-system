@@ -8,6 +8,9 @@ RUN apt-get update && \
 
 WORKDIR /app
 
+# Create data directory for H2 database
+RUN mkdir -p /app/data
+
 # Copy pom.xml and download dependencies
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
@@ -19,5 +22,5 @@ RUN mvn clean package -DskipTests
 # Expose port
 EXPOSE $PORT
 
-# Run the application
-CMD ["sh", "-c", "java -Dserver.port=$PORT -Dspring.profiles.active=h2 -jar target/online-banking-system-0.0.1-SNAPSHOT.jar"]
+# Run the application with render profile
+CMD ["sh", "-c", "java -Dserver.port=$PORT -Dspring.profiles.active=render -jar target/online-banking-system-0.0.1-SNAPSHOT.jar"]
