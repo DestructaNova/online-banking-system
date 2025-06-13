@@ -43,7 +43,13 @@ const AdminPanel = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [selectedUser, setSelectedUser] = useState(null)
   const [actionLoading, setActionLoading] = useState(false)
-  const { isAdmin } = useAuth()
+  const { isAdmin, user } = useAuth()
+
+  // Debug logging
+  useEffect(() => {
+    console.log('Current user:', user)
+    console.log('Is admin?', isAdmin())
+  }, [user])
 
   useEffect(() => {
     if (tabValue === 0) {
@@ -56,10 +62,16 @@ const AdminPanel = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true)
+      console.log('Fetching users...')
       const data = await adminService.getAllUsers()
+      console.log('Users fetched successfully:', data)
       setUsers(data)
+      setError('') // Clear any previous errors
     } catch (error) {
-      const errorMessage = error.response?.data?.message || 'Failed to load users'
+      console.error('Error fetching users:', error)
+      console.error('Error response:', error.response)
+      console.error('Error message:', error.message)
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to load users'
       setError(errorMessage)
       toast.error(errorMessage)
     } finally {
