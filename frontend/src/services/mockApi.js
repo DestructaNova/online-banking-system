@@ -50,7 +50,16 @@ export const mockApi = {
   accounts: {
     getAll: async () => {
       await delay()
-      return { data: mockAccounts.filter(acc => acc.isActive) }
+      // Get current user from localStorage
+      const currentUser = JSON.parse(localStorage.getItem('user') || '{}')
+      const userId = currentUser.id
+
+      // Filter accounts by current user
+      const userAccounts = mockAccounts.filter(acc =>
+        acc.isActive && (userId === 1 || acc.userId === userId) // Admin sees all, users see their own
+      )
+
+      return { data: userAccounts }
     },
     
     create: async (accountData) => {
@@ -77,9 +86,42 @@ export const mockApi = {
 
   // Transactions
   transactions: {
-    getAll: async () => {
+    getAll: async (page = 0, size = 10) => {
       await delay()
-      return { data: mockTransactions }
+      // Get current user from localStorage
+      const currentUser = JSON.parse(localStorage.getItem('user') || '{}')
+      const userId = currentUser.id
+
+      // Get user's account numbers
+      const userAccounts = mockAccounts.filter(acc =>
+        acc.isActive && (userId === 1 || acc.userId === userId)
+      )
+      const userAccountNumbers = userAccounts.map(acc => acc.accountNumber)
+
+      // Filter transactions by user's accounts
+      const userTransactions = mockTransactions.filter(trans =>
+        userId === 1 || // Admin sees all
+        userAccountNumbers.includes(trans.fromAccountNumber) ||
+        userAccountNumbers.includes(trans.toAccountNumber)
+      ).map(trans => ({
+        ...trans,
+        transactionDate: trans.createdAt // Map createdAt to transactionDate for compatibility
+      }))
+
+      // Return in paginated format that the frontend expects
+      const startIndex = page * size
+      const endIndex = startIndex + size
+      const paginatedTransactions = userTransactions.slice(startIndex, endIndex)
+
+      return {
+        data: {
+          content: paginatedTransactions,
+          totalElements: userTransactions.length,
+          totalPages: Math.ceil(userTransactions.length / size),
+          size: size,
+          number: page
+        }
+      }
     },
     
     transfer: async (transferData) => {

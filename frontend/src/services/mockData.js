@@ -53,6 +53,7 @@ export const mockAccounts = [
     accountType: 'SAVINGS',
     balance: 15750.50,
     userId: 2,
+    user: { id: 2, username: 'demo' },
     createdAt: '2024-01-15T00:00:00',
     isActive: true
   },
@@ -62,6 +63,7 @@ export const mockAccounts = [
     accountType: 'CHECKING',
     balance: 3250.75,
     userId: 2,
+    user: { id: 2, username: 'demo' },
     createdAt: '2024-01-15T00:00:00',
     isActive: true
   },
@@ -71,6 +73,7 @@ export const mockAccounts = [
     accountType: 'SAVINGS',
     balance: 25000.00,
     userId: 3,
+    user: { id: 3, username: 'john_doe' },
     createdAt: '2024-02-01T00:00:00',
     isActive: true
   }
