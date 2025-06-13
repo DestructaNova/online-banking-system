@@ -1,5 +1,5 @@
 # Multi-stage build for Spring Boot application
-FROM maven:3.9.4-openjdk-17 AS build
+FROM maven:3.9-openjdk-17 AS build
 
 WORKDIR /app
 
@@ -24,10 +24,6 @@ COPY --from=build /app/target/*.jar app.jar
 
 # Expose port
 EXPOSE $PORT
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-  CMD curl -f http://localhost:$PORT/api/health || exit 1
 
 # Run the application
 CMD ["sh", "-c", "java -Dserver.port=$PORT -Dspring.profiles.active=h2 -jar app.jar"]
