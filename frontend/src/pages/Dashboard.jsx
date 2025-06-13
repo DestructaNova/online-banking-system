@@ -7,7 +7,6 @@ import {
   Box,
   CircularProgress,
   Alert,
-  Button,
   Chip,
 } from '@mui/material'
 import {
@@ -19,7 +18,6 @@ import {
 import { useAuth } from '../contexts/AuthContext'
 import accountService from '../services/accountService'
 import transactionService from '../services/transactionService'
-import DemoBanner from '../components/DemoBanner'
 import { toast } from 'react-toastify'
 
 const Dashboard = () => {
@@ -87,8 +85,6 @@ const Dashboard = () => {
 
   return (
     <Box>
-      <DemoBanner />
-
       <Typography variant="h4" gutterBottom>
         Welcome back, {user?.username}!
       </Typography>
