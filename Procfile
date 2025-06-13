@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -Dspring.profiles.active=h2 -jar target/online-banking-system-0.0.1-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -Dspring.profiles.active=railway -jar target/online-banking-system-0.0.1-SNAPSHOT.jar
