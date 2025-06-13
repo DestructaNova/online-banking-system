@@ -4,8 +4,8 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "java -Xmx256m -Xms128m -Dserver.port=$PORT -Dspring.profiles.active=h2 -Djava.awt.headless=true -XX:+UseG1GC -jar target/online-banking-system-0.0.1-SNAPSHOT.jar",
-    "healthcheckPath": "/api/actuator/health",
+    "startCommand": "java -Xmx256m -Xms128m -Dserver.port=$PORT -Dspring.profiles.active=railway -Djava.awt.headless=true -XX:+UseG1GC -jar target/online-banking-system-0.0.1-SNAPSHOT.jar",
+    "healthcheckPath": "/api/health",
     "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 3
